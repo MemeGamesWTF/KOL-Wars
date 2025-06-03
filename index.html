@@ -24,6 +24,13 @@
         height: 100vh;
         touch-action: none;
       }
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        background: #000;
+      }
     </style>
   </head>
   <body>
@@ -105,15 +112,22 @@
 
       loadingBar.style.display = "block";
       
-      function resizeCanvasToViewport() {
-        const canvas = document.getElementById('unity-canvas');
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-      }
+      onst canvas = document.querySelector("#unity-canvas");
 
-      window.addEventListener('resize', resizeCanvasToViewport);
-      window.addEventListener('orientationchange', resizeCanvasToViewport);
-      resizeCanvasToViewport(); // Initial resize
+        function resizeCanvasToVisibleArea() {
+        const height = window.innerHeight;
+        const width = window.innerWidth;
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        canvas.height = height;
+        canvas.width = width;
+        }
+
+        window.addEventListener("resize", resizeCanvasToVisibleArea);
+        window.addEventListener("orientationchange", resizeCanvasToVisibleArea);
+        window.addEventListener("load", resizeCanvasToVisibleArea);
+
+        resizeCanvasToVisibleArea(); // initial call
 
       var script = document.createElement("script");
       script.src = loaderUrl;
