@@ -7,6 +7,24 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+      #unity-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        touch-action: none;
+      }
+    </style>
   </head>
   <body>
     <div id="unity-container">
@@ -86,6 +104,16 @@
       }
 
       loadingBar.style.display = "block";
+      
+      function resizeCanvasToViewport() {
+        const canvas = document.getElementById('unity-canvas');
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+      }
+
+      window.addEventListener('resize', resizeCanvasToViewport);
+      window.addEventListener('orientationchange', resizeCanvasToViewport);
+      resizeCanvasToViewport(); // Initial resize
 
       var script = document.createElement("script");
       script.src = loaderUrl;
